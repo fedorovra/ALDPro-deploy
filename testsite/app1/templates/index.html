@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Заполните данные для установки</h1>
+
+<form action="/action_page.php" method="post" target="_blank">
+    {% csrf_token %}
+    <label for="fname">Пароль администратора домена:</label>
+    <input type="text" id="fp" name="FORM_PASSWORD"><br><br>
+    <label for="lname">FQDN:</label>
+    <input type="text" id="fq" name="FORM_FQDN"><br><br>
+    <label for="lname">IP-адрес контроллера:</label>
+    <input type="text" id="fi" name="FORM_IP"><br><br>
+    <label for="lname">Маска сети:</label>
+    <input type="text" id="fm" name="FORM_MASK"><br><br>
+    <label for="lname">Шлюз:</label>
+    <input type="text" id="fg" name="FORM_GW"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

@@ -43,3 +43,8 @@
   tags:
     - 'role::deploy-ald-servers'
     - 'role::deploy-ald-servers:deploy'
+
+- import_tasks: firefox.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:firefox'

@@ -1,0 +1,11 @@
+all:
+  hosts:
+    localhost:
+      ansible_user: ansible
+      ansible_become: true
+      role: first_dc
+      admin_password: {{ request.POST.FORM_PASSWORD }}
+      FQDN: {{ request.POST.FORM_FQDN }}
+      ip_address: {{ request.POST.FORM_IP }}
+      ip_netmask: {{ request.POST.FORM_MASK }}
+      ip_gateway: {{ request.POST.FORM_GW }}

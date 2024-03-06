@@ -1,0 +1,4 @@
+- name: Add FQDN hostname to Firefox homepage instead of short hostname
+  shell:
+    cmd: 'sed -i "s/https:\/\/.*\$/https:\/\/{{ FQDN }}\/\",/g" /usr/lib/firefox/distribution/policies.json'
+
