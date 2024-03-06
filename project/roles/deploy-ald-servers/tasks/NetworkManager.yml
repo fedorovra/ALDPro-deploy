@@ -1,0 +1,8 @@
+- name: Disable NetworkManager
+  service:
+    name: NetworkManager
+    enabled: false
+    state: stopped
+
+- name: Mask NetworkManager
+  shell: systemctl mask NetworkManager.service

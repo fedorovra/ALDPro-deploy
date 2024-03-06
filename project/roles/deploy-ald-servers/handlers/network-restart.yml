@@ -1,0 +1,9 @@
+- name: Flush connection
+  shell: "ip addr flush dev {{ ansible_default_ipv4.interface }}"
+  listen: "apply network configuration"
+
+- name: Restart network services
+  service:
+    name: networking
+    state: restarted
+  listen: "apply network configuration"

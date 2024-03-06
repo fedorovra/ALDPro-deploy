@@ -1,0 +1,2 @@
+- name: Set hostname
+  shell: hostnamectl set-hostname "{{ FQDN }}"

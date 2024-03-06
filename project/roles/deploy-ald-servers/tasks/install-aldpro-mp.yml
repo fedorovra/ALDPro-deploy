@@ -1,0 +1,6 @@
+- name: Install packet aldpro-mp
+  apt:
+    name: aldpro-mp
+    state: present
+  environment:
+    DEBIAN_FRONTEND: noninteractive 

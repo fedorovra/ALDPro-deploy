@@ -1,0 +1,5 @@
+- name: Update repositories cache and upgrade packets
+  apt:
+    upgrade: dist
+    update_cache: yes
+    dpkg_options: 'force-confnew'

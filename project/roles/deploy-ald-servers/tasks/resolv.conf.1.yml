@@ -1,0 +1,4 @@
+- name: Deploy resolve configuration
+  template:
+    src: resolv.conf.1.j2
+    dest: "/etc/resolv.conf"

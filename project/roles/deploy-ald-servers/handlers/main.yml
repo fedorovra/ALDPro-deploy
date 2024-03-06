@@ -1,0 +1,3 @@
+---
+
+- import_tasks: network-restart.yml

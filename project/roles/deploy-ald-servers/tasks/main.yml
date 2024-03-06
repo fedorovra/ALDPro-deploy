@@ -1,0 +1,45 @@
+---
+- import_tasks: NetworkManager.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:NetworkManager'
+
+- import_tasks: interfaces.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:interfaces'
+
+- import_tasks: resolv.conf.1.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:resolv1'
+
+- import_tasks: hostname.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:hostname'
+
+- import_tasks: hosts.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:hosts'
+
+- import_tasks: update.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:update'
+
+- import_tasks: install-aldpro-mp.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:install-aldpro-mp'
+
+- import_tasks: resolv.conf.2.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:resolv2'
+
+- import_tasks: deploy.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:deploy'

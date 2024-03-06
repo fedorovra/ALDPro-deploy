@@ -1,0 +1,10 @@
+- name: Deploy network configuration
+  template:
+    src: interfaces.j2
+    dest: "/etc/network/interfaces"
+  notify: "apply network configuration"
+
+- name: Flush handlers
+  meta: flush_handlers
+
+

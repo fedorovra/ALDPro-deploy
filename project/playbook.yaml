@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  roles:
+    - deploy-ald-servers
+  tags:
+    - deploy-ald-servers
+    - deploy
