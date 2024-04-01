@@ -4,3 +4,6 @@
     state: present
   environment:
     DEBIAN_FRONTEND: noninteractive 
+
+- name: 
+  shell: echo -e "XXX\n70"

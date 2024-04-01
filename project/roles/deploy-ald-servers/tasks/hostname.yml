@@ -1,2 +1,5 @@
 - name: Set hostname
   shell: hostnamectl set-hostname "{{ FQDN }}"
+
+- name: 
+  shell: echo -e "XXX\n40"

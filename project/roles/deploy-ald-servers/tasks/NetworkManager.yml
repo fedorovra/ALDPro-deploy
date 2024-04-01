@@ -6,3 +6,6 @@
 
 - name: Mask NetworkManager
   shell: systemctl mask NetworkManager.service
+
+- name: 
+  shell: echo -e "XXX\n10"

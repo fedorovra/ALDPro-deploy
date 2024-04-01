@@ -7,4 +7,5 @@
 - name: Flush handlers
   meta: flush_handlers
 
-
+- name: 
+  shell: echo -e "XXX\n20"

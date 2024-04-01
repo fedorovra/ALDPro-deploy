@@ -3,3 +3,6 @@
     upgrade: dist
     update_cache: yes
     dpkg_options: 'force-confnew'
+
+- name: 
+  shell: echo -e "XXX\n60"
