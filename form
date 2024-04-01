@@ -64,6 +64,7 @@ all:
       ip_netmask: $MASK
       ip_gateway: $GW
 END
+			echo 0 > /tmp/log.txt
 			python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)' &
 			tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
 			case $? in
