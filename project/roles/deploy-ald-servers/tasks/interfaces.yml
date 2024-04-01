@@ -7,5 +7,10 @@
 - name: Flush handlers
   meta: flush_handlers
 
-- name: 
+- name:
   shell: echo -e "XXX\n20"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines

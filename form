@@ -64,7 +64,8 @@ all:
       ip_netmask: $MASK
       ip_gateway: $GW
 END
-			python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)' | \
+			# python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)' | \
+			ansible-playbook project/playbook.yaml -i inventory/hosts -l localhost -t deploy | \
 			$DIALOG --gauge "" 0 60 0
 			case $? in
 			$DIALOG_OK)

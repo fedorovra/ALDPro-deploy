@@ -5,5 +5,10 @@
   environment:
     DEBIAN_FRONTEND: noninteractive 
 
-- name: 
+- name:
   shell: echo -e "XXX\n70"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines

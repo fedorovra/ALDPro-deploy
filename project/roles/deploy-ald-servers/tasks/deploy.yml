@@ -1,5 +1,10 @@
 - name: Deploy first controller
   shell: aldpro-server-install -d "{{ FQDN.split(".")[1:]|join(".") }}" -n "{{ FQDN.split(".")[0] }}" -p "{{ admin_password }}" --ip "{{ ip_address }}" --no-reboot
 
-- name: 
+- name:
   shell: echo -e "XXX\n90"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines

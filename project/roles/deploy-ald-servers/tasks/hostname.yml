@@ -1,5 +1,10 @@
 - name: Set hostname
   shell: hostnamectl set-hostname "{{ FQDN }}"
 
-- name: 
+- name:
   shell: echo -e "XXX\n40"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines

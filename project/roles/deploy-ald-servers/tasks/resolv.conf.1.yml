@@ -3,5 +3,10 @@
     src: resolv.conf.1.j2
     dest: "/etc/resolv.conf"
 
-- name: 
+- name:
   shell: echo -e "XXX\n30"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines

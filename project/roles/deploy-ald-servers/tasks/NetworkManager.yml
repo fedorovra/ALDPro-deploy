@@ -7,5 +7,10 @@
 - name: Mask NetworkManager
   shell: systemctl mask NetworkManager.service
 
-- name: 
+- name:
   shell: echo -e "XXX\n10"
+  register: out
+
+- name:
+  debug:
+    var: out.stdout_lines
