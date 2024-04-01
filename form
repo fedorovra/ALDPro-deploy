@@ -64,14 +64,8 @@ all:
       ip_netmask: $MASK
       ip_gateway: $GW
 END
-			python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)' 
-			$DIALOG --title "TAIL BOX" "$@" \
-        	--tailbox /home/localadmin/ALDPro-deploy/artifacts/*/stdout 24 70
-			# "$DIALOG" \
-			# --clear \
-			# --no-collapse \
-			# --cr-wrap \
-			# --msgbox "Все готово!" 10 40
+			python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)' | \
+			$DIALOG --gauge "" 0 60 0
 			case $? in
 			$DIALOG_OK)
 				break
