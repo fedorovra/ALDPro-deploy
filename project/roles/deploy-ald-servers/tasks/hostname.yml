@@ -2,4 +2,4 @@
   shell: hostnamectl set-hostname "{{ FQDN }}"
 
 - name:
-  shell: echo 40 >> log.txt
+  shell: echo 40 >> /tmp/log.txt

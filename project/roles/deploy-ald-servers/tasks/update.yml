@@ -5,4 +5,4 @@
     dpkg_options: 'force-confnew'
 
 - name:
-  shell: echo 60 >> log.txt
+  shell: echo 60 >> /tmp/log.txt

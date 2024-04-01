@@ -6,4 +6,4 @@
     DEBIAN_FRONTEND: noninteractive 
 
 - name:
-  shell: echo 70 >> log.txt
+  shell: echo 70 >> /tmp/log.txt

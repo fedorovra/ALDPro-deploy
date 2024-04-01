@@ -8,4 +8,4 @@
   meta: flush_handlers
 
 - name:
-  shell: echo 20 >> log.txt
+  shell: echo 20 >> /tmp/log.txt

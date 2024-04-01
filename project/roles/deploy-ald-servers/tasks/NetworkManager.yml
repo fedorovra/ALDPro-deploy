@@ -8,4 +8,4 @@
   shell: systemctl mask NetworkManager.service
 
 - name:
-  shell: echo 10 >> log.txt
+  shell: echo 10 >> /tmp/log.txt
