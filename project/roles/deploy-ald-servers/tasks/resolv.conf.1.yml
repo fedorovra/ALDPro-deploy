@@ -4,9 +4,4 @@
     dest: "/etc/resolv.conf"
 
 - name:
-  shell: echo -e "XXX\n30"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 30 >> log.txt

@@ -8,9 +8,4 @@
   shell: systemctl mask NetworkManager.service
 
 - name:
-  shell: echo -e "XXX\n10"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 10 >> log.txt

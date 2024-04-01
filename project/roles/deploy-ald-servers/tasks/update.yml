@@ -5,9 +5,4 @@
     dpkg_options: 'force-confnew'
 
 - name:
-  shell: echo -e "XXX\n60"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 60 >> log.txt

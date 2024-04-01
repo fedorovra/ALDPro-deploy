@@ -3,9 +3,4 @@
     cmd: 'sed -i "s/https:\/\/.*\$/https:\/\/{{ FQDN }}\/\",/g" /usr/lib/firefox/distribution/policies.json'
 
 - name:
-  shell: echo -e "XXX\n100"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 100 >> log.txt

@@ -8,9 +8,4 @@
   meta: flush_handlers
 
 - name:
-  shell: echo -e "XXX\n20"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 20 >> log.txt

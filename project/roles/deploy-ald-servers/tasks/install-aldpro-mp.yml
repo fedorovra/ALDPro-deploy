@@ -6,9 +6,4 @@
     DEBIAN_FRONTEND: noninteractive 
 
 - name:
-  shell: echo -e "XXX\n70"
-  register: out
-
-- name:
-  debug:
-    var: out.stdout_lines
+  shell: echo 70 >> log.txt
