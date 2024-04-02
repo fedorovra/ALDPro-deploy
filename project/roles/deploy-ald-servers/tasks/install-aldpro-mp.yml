@@ -6,4 +6,4 @@
     DEBIAN_FRONTEND: noninteractive 
 
 - name:
-  shell: echo "XXX\n70\nУстановка ПО\nXXX" >> /tmp/log.txt
+  shell: echo 70 >> /tmp/log.txt
