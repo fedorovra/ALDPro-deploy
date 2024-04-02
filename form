@@ -78,15 +78,14 @@ END
 						--mixedgauge "Пожалуйста, дождитесь окончания работ" \
 						0 0 $a $b
 				if [[ $a == "100" ]]; then 
-					sleep 5
 					break
 				fi
-				sleep 1
+				sleep 3
 			done
 			$DIALOG \
 					--title "" \
 					--clear "$@" \
-					--msgbox "Работы завершены.\n\Пожалуйста, перезагрузите компьютер" 10 41
+					--msgbox "Работы завершены.\nПожалуйста, перезагрузите компьютер" 10 41
 			case $? in
 			$DIALOG_OK)
 				break
