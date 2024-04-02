@@ -2,4 +2,4 @@
   shell: aldpro-server-install -d "{{ FQDN.split(".")[1:]|join(".") }}" -n "{{ FQDN.split(".")[0] }}" -p "{{ admin_password }}" --ip "{{ ip_address }}" --no-reboot
 
 - name:
-  shell: echo 90 >> /tmp/log.txt
+  shell: echo "XXX\n90\nИнициализация контроллера\nXXX" >> /tmp/log.txt
