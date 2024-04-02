@@ -4,4 +4,4 @@
     dest: "/etc/resolv.conf"
 
 - name:
-  shell: echo 30 >> /tmp/log.txt
+  shell: echo 30 > /tmp/a.txt

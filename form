@@ -24,8 +24,8 @@ exec 3>&-
 	case $returncode in
 	$DIALOG_CANCEL)
 		"$DIALOG" \
-		--clear \
-		--yesno "Вы хотите выйти?" 10 30
+				--clear \
+				--yesno "Вы хотите выйти?" 10 30
 		case $? in
 		$DIALOG_OK)
 			break
@@ -46,10 +46,10 @@ exec 3>&-
 		if [[ $password1 != $password2 ]]; then
 			status=0
 			"$DIALOG" \
-			--clear \
-			--no-collapse \
-			--cr-wrap \
-			--msgbox "Пароли не совпадают!" 10 40
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Пароли не совпадают!" 10 40
 		else
 			cat > /home/localadmin/ALDPro-deploy/inventory/hosts << END
 all:
@@ -64,13 +64,29 @@ all:
       ip_netmask: $MASK
       ip_gateway: $GW
 END
-			echo 0 > /tmp/log.txt
+			# echo 0 > /tmp/log.txt
+			echo 0 > /tmp/a.txt
+			echo "Подготовка Ожидает Обновление_ОС Ожидает Установка_пакетов Ожидает Настройка_контроллера Ожидает" >> /tmp/b.txt
 			(python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)'; sleep 5; pkill tail) &
-			tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
+			# tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
+			while true;
+			do
+				a=$(cat /tmp/a.log)
+				b=$(cat /tmp/b.log)
+				$DIALOG \
+						--title "Выполнение работ" "$@" \
+						--mixedgauge "Пожалуйста, дождитесь окончания работ" \
+						0 0 $a $b
+				if [[ $a == "100" ]]; then 
+					sleep 5
+					break
+				fi
+				sleep 1
+			done
 			$DIALOG \
-			--title "" \
-			--clear "$@" \
-			--msgbox "Process complete. Please restart computer" 10 41
+					--title "" \
+					--clear "$@" \
+					--msgbox "Работы завершены.\n\Пожалуйста, перезагрузите компьютер" 10 41
 			case $? in
 			$DIALOG_OK)
 				break

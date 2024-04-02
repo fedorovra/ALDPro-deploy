@@ -3,4 +3,7 @@
     cmd: 'sed -i "s/https:\/\/.*\$/https:\/\/{{ FQDN }}\/\",/g" /usr/lib/firefox/distribution/policies.json'
 
 - name:
-  shell: echo 100 >> /tmp/log.txt
+  shell: echo 100 > /tmp/a.txt
+
+- name:
+  shell: echo "Подготовка Выполнено Обновление_ОС Выполнено Установка_пакетов Выполнено Настройка_контроллера Выполнено" >> /tmp/b.txt

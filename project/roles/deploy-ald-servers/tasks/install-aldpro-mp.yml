@@ -1,3 +1,6 @@
+- name:
+  shell: echo "Подготовка Выполнено Обновление_ОС Выполнено Установка_пакетов Выполняется Настройка_контроллера Ожидает" >> /tmp/b.txt
+
 - name: Install packet aldpro-mp
   apt:
     name: aldpro-mp
@@ -6,4 +9,4 @@
     DEBIAN_FRONTEND: noninteractive 
 
 - name:
-  shell: echo 70 >> /tmp/log.txt
+  shell: echo 70 > /tmp/a.txt
