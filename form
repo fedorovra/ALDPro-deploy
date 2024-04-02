@@ -66,13 +66,13 @@ all:
 END
 			# echo 0 > /tmp/log.txt
 			echo 0 > /tmp/a.txt
-			echo "Подготовка Ожидает Обновление_ОС Ожидает Установка_пакетов Ожидает Настройка_контроллера Ожидает" >> /tmp/b.txt
+			echo "Подготовка Ожидает Обновление_ОС Ожидает Установка_пакетов Ожидает Настройка_контроллера Ожидает" > /tmp/b.txt
 			(python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)'; sleep 5; pkill tail) &
 			# tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
 			while true;
 			do
-				a=$(cat /tmp/a.log)
-				b=$(cat /tmp/b.log)
+				a=$(cat /tmp/a.txt)
+				b=$(cat /tmp/b.txt)
 				$DIALOG \
 						--title "Выполнение работ" "$@" \
 						--mixedgauge "Пожалуйста, дождитесь окончания работ" \
