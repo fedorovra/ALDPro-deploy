@@ -14,7 +14,7 @@
 
 - name:
   copy:
-    src: /root/login
+    src: /usr/login
     dest: /etc/pam.d/login
     owner: root
     group: root
