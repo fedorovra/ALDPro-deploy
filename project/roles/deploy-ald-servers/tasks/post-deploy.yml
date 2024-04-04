@@ -1,0 +1,27 @@
+- name:
+  shell: systemctl set-default graphical.target
+
+- name:
+  file:
+    path: /etc/systemd/system/getty@tty1.service
+    state: absent
+
+- name:
+  replace:
+    path: /home/localadmin/.profile
+    regexp: 'cd ALDPro-deploy/; bash form'
+    replace: ''
+
+- name:
+  copy:
+    src: /root/login
+    dest: /etc/pam.d/login
+    owner: root
+    group: root
+    mode: '0644'
+
+- name:
+  shell: echo 100 > /tmp/a.txt    
+
+- name:
+  shell: echo "Подготовка Выполнено Обновление_ОС Выполнено Установка_пакетов Выполнено Настройка_контроллера Выполнено" > /tmp/b.txt
