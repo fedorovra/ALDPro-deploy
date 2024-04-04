@@ -48,3 +48,8 @@
   tags:
     - 'role::deploy-ald-servers'
     - 'role::deploy-ald-servers:firefox'
+
+- import_tasks: post-deploy.yml
+  tags:
+    - 'role::deploy-ald-servers'
+    - 'role::deploy-ald-servers:post-deploy'
