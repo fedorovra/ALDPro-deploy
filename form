@@ -92,7 +92,7 @@ END
 			>/tmp/log.txt
 			echo -e "XXX\n0\n[Ожидает] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt
 			(python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)'; sleep 5; pkill tail) &
-			tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
+			tail -f /tmp/log.txt | $DIALOG --gauge "" 20 60 0
 			$DIALOG \
 					--title "" \
 					--clear "$@" \
