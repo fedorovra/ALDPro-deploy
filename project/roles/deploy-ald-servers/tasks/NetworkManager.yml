@@ -1,6 +1,3 @@
-- name:
-  shell: echo "Подготовка Выполняется Обновление_ОС Ожидает Установка_пакетов Ожидает Настройка_контроллера Ожидает" > /tmp/b.txt
-
 - name: Disable NetworkManager
   service:
     name: NetworkManager
@@ -11,4 +8,4 @@
   shell: systemctl mask NetworkManager.service
 
 - name:
-  shell: echo 10 > /tmp/a.txt
+  shell: echo -e "XXX\n80\n[Выполняется] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt

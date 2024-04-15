@@ -5,21 +5,22 @@
 returncode=0
 while test $returncode != 1 && test $returncode != 250
 do
-returncode=$?
-exec 3>&1
-value=`$DIALOG  --title "Конфигуратор ALDPro" --ok-label "Submit" \
-	--insecure "$@" \
-	--mixedform "Введите настройки первичного контроллера домена:" \
-	20 52 0 \
-	"Пароль администратора домена: " 1 1	"password" 1 30 20 0 1 \
-	"Повторите ввод пароля       : " 2 1	"password" 2 30 20 0 1 \
-	"FQDN                        : " 3 1	"dc1.test.loc" 3 30 20 0 0 \
-	"IP-адрес контроллера        : " 4 1	"192.168.122.216" 4 30 20 0 0 \
-	"Маска сети                  : " 5 1	"255.255.255.0" 5 30 20 0 0 \
-	"Шлюз                        : " 6 1	"192.168.122.1" 6 30 20 0 0 \
-	2>&1 1>&3`
-returncode=$?
-exec 3>&-
+	returncode=$?
+	exec 3>&1
+	value=`$DIALOG  --title "Конфигуратор ALDPro" --ok-label "Submit" \
+		--insecure "$@" \
+		--mixedform "Введите настройки первичного контроллера домена:" \
+		20 52 0 \
+		"Пароль администратора домена: " 1 1 "" 1 30 20 0 1 \
+		"Повторите ввод пароля       : " 2 1 "" 2 30 20 0 1 \
+		"Имя компьютера              : " 3 1 "" 3 30 20 0 0 \
+		"Домен                       : " 4 1 "" 4 30 20 0 0 \
+		"IP-адрес контроллера        : " 5 1 "" 5 30 20 0 0 \
+		"Маска сети                  : " 6 1 "" 6 30 20 0 0 \
+		"Шлюз                        : " 7 1 "" 7 30 20 0 0 \
+		2>&1 1>&3`
+	returncode=$?
+	exec 3>&-
 
 	case $returncode in
 	$DIALOG_CANCEL)
@@ -38,18 +39,42 @@ exec 3>&-
 	$DIALOG_OK)
 		password1=$(echo $value | paste -s -d' ' | awk '{ print $1 }')
 		password2=$(echo $value | paste -s -d' ' | awk '{ print $2 }')
-		FQDN=$(echo $value | paste -s -d' ' | awk '{ print $3 }')
-		IP=$(echo $value | paste -s -d' ' | awk '{ print $4 }')
-		MASK=$(echo $value | paste -s -d' ' | awk '{ print $5 }')
-		GW=$(echo $value | paste -s -d' ' | awk '{ print $6 }')
-
-		if [[ $password1 != $password2 ]]; then
-			status=0
-			"$DIALOG" \
+		HOSTNAME=$(echo $value | paste -s -d' ' | awk '{ print $3 }')
+		DOMAIN=$(echo $value | paste -s -d' ' | awk '{ print $4 }')
+		IP=$(echo $value | paste -s -d' ' | awk '{ print $5 }')
+		MASK=$(echo $value | paste -s -d' ' | awk '{ print $6 }')
+		GW=$(echo $value | paste -s -d' ' | awk '{ print $7 }')
+		
+		if [[ ! $password1 || ! $password2 || ! $HOSTNAME || ! $DOMAIN || ! $IP || ! $MASK || ! $GW ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Заполнены не все поля!\nПожалуйста, проверьте вводимые данные" 10 40
+		elif [[ $password1 != $password2 ]]; then
+			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Пароли не совпадают!" 10 40
+		elif [[ ! $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $IP/$MASK 2>/dev/null) ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Ошибка во вводимых данных!\nПроверьте, пожалуйста, корректность IP-адреса и маски сети" 10 40
+		elif [[ ! $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $GW/$MASK 2>/dev/null) ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Ошибка во вводимых данных!\nПроверьте, пожалуйста, корректность адреса шлюза" 10 40
+		elif [[ $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).network)' $a 2>/dev/null) != $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).network)' $b 2>/dev/null) ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Ошибка во вводимых данных!\nIP-адрес контроллера и шлюз в разных сетях" 10 40
 		else
 			cat > /home/localadmin/ALDPro-deploy/inventory/hosts << END
 all:
@@ -59,29 +84,15 @@ all:
       ansible_become: true
       role: first_dc
       admin_password: $password1
-      FQDN: $FQDN
+      FQDN: $HOSTNAME.$DOMAIN
       ip_address: $IP
       ip_netmask: $MASK
       ip_gateway: $GW
 END
-			# echo 0 > /tmp/log.txt
-			echo 0 > /tmp/a.txt
-			echo "Подготовка Ожидает Обновление_ОС Ожидает Установка_пакетов Ожидает Настройка_контроллера Ожидает" > /tmp/b.txt
+			>/tmp/log.txt
+			echo -e "XXX\n0\n[Ожидает] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt
 			(python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", playbook="playbook.yaml", quiet=True,)'; sleep 5; pkill tail) &
-			# tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
-			while true;
-			do
-				a=$(cat /tmp/a.txt)
-				b=$(cat /tmp/b.txt)
-				$DIALOG \
-						--title "Выполнение работ" "$@" \
-						--mixedgauge "Пожалуйста, дождитесь окончания работ" \
-						0 0 $a $b
-				if [[ $a == "100" ]]; then 
-					break
-				fi
-				sleep 3
-			done
+			tail -f /tmp/log.txt | $DIALOG --gauge "" 0 60 0
 			$DIALOG \
 					--title "" \
 					--clear "$@" \

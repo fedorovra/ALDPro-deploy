@@ -1,5 +1,5 @@
 - name:
-  shell: echo "Подготовка Выполнено Обновление_ОС Выполняется Установка_пакетов Ожидает Настройка_контроллера Ожидает" > /tmp/b.txt
+  shell: echo -e "XXX\n50\n[Выполнено] : Подготовка\n[Выполняется] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt
 
 - name: Update repositories cache and upgrade packets
   apt:
@@ -8,4 +8,4 @@
     dpkg_options: 'force-confnew'
 
 - name:
-  shell: echo 60 > /tmp/a.txt
+  shell: echo -e "XXX\n60\n[Выполнено] : Подготовка\n[Выполнено] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt
