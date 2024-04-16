@@ -51,30 +51,35 @@ do
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Заполнены не все поля!\nПожалуйста, проверьте вводимые данные" 10 40
+			returncode=99
 		elif [[ $password1 != $password2 ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Пароли не совпадают!" 10 40
+			returncode=99
 		elif [[ ! $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $IP/$MASK 2>/dev/null) ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Ошибка во вводимых данных!\nПроверьте, пожалуйста, корректность IP-адреса и маски сети" 10 40
+			returncode=99
 		elif [[ ! $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $GW/$MASK 2>/dev/null) ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Ошибка во вводимых данных!\nПроверьте, пожалуйста, корректность адреса шлюза" 10 40
+			returncode=99
 		elif [[ $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).network)' $a 2>/dev/null) != $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).network)' $b 2>/dev/null) ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Ошибка во вводимых данных!\nIP-адрес контроллера и шлюз в разных сетях" 10 40
+			returncode=99
 		else
 			cat > /home/localadmin/ALDPro-deploy/inventory/hosts << END
 all:
