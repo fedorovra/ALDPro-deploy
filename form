@@ -2,8 +2,8 @@
 
 . ./setup-vars
 
-password1=""
-password2=""
+PASSWORD1=""
+PASSWORD2=""
 HOSTNAME=""
 DOMAIN=""
 IP=""
@@ -19,13 +19,13 @@ do
 		--insecure "$@" \
 		--mixedform "Введите настройки первичного контроллера домена:" \
 		20 52 0 \
-		"Пароль администратора домена: " 1 1 $password1 1 30 20 0 1 \
-		"Повторите ввод пароля       : " 2 1 $password2 2 30 20 0 1 \
-		"Имя компьютера              : " 3 1 $HOSTNAME 3 30 20 0 0 \
-		"Домен                       : " 4 1 $DOMAIN 4 30 20 0 0 \
-		"IP-адрес контроллера        : " 5 1 $IP 5 30 20 0 0 \
-		"Маска сети                  : " 6 1 $MASK 6 30 20 0 0 \
-		"Шлюз                        : " 7 1 $GW 7 30 20 0 0 \
+		"Пароль администратора домена: " 1 1 "$PASSWORD1" 1 30 20 0 1 \
+		"Повторите ввод пароля       : " 2 1 "$PASSWORD2" 2 30 20 0 1 \
+		"Имя компьютера              : " 3 1 "$HOSTNAME" 3 30 20 0 0 \
+		"Домен                       : " 4 1 "$DOMAIN" 4 30 20 0 0 \
+		"IP-адрес контроллера        : " 5 1 "$IP" 5 30 20 0 0 \
+		"Маска сети                  : " 6 1 "$MASK" 6 30 20 0 0 \
+		"Шлюз                        : " 7 1 "$GW" 7 30 20 0 0 \
 		2>&1 1>&3`
 	returncode=$?
 	exec 3>&-
@@ -45,21 +45,21 @@ do
 		esac
 		;;
 	$DIALOG_OK)
-		password1=$(echo $value | paste -s -d' ' | awk '{ print $1 }')
-		password2=$(echo $value | paste -s -d' ' | awk '{ print $2 }')
+		PASSWORD1=$(echo $value | paste -s -d' ' | awk '{ print $1 }')
+		PASSWORD2=$(echo $value | paste -s -d' ' | awk '{ print $2 }')
 		HOSTNAME=$(echo $value | paste -s -d' ' | awk '{ print $3 }')
 		DOMAIN=$(echo $value | paste -s -d' ' | awk '{ print $4 }')
 		IP=$(echo $value | paste -s -d' ' | awk '{ print $5 }')
 		MASK=$(echo $value | paste -s -d' ' | awk '{ print $6 }')
 		GW=$(echo $value | paste -s -d' ' | awk '{ print $7 }')
 		
-		if [[ ! $password1 || ! $password2 || ! $HOSTNAME || ! $DOMAIN || ! $IP || ! $MASK || ! $GW ]]; then
+		if [[ ! $PASSWORD1 || ! $PASSWORD2 || ! $HOSTNAME || ! $DOMAIN || ! $IP || ! $MASK || ! $GW ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Заполнены не все поля!\nПожалуйста, проверьте вводимые данные" 10 40
-		elif [[ $password1 != $password2 ]]; then
+		elif [[ $PASSWORD1 != $PASSWORD2 ]]; then
 			$DIALOG \
 					--clear \
 					--no-collapse \
@@ -91,11 +91,11 @@ all:
       ansible_user: ansible
       ansible_become: true
       role: first_dc
-      admin_password: $password1
+      admin_password: $PASSWORD1
       FQDN: $HOSTNAME.$DOMAIN
-      ip_address: $IP
-      ip_netmask: $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $GW/$MASK 2>/dev/null)
-      ip_gateway: $GW
+      ip_address: $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).ip)' $IP/$MASK 2>/dev/null)
+      ip_netmask: $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $IP/$MASK 2>/dev/null)
+      ip_gateway: $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).ip)' $GW/$MASK 2>/dev/null)
 END
 			>/tmp/log.txt
 			echo -e "XXX\n0\n[Ожидает] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt
