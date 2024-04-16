@@ -9,7 +9,7 @@
 - name:
   replace:
     path: /home/localadmin/.profile
-    regexp: 'cd ALDPro-deploy/; bash form'
+    regexp: 'cd ALDPro-deploy; bash form'
     replace: ''
 
 - name:
@@ -19,6 +19,12 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: change password
+  user:
+    name: localadmin
+    state: present
+    password: "{{ admin_password | password_hash('sha512') }}"
 
 - name:
   shell: |

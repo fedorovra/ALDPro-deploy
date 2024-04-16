@@ -86,7 +86,7 @@ all:
       admin_password: $password1
       FQDN: $HOSTNAME.$DOMAIN
       ip_address: $IP
-      ip_netmask: $MASK
+      ip_netmask: $(python3 -c 'import ipaddress, sys; print(ipaddress.ip_interface(sys.argv[1]).netmask)' $GW/$MASK 2>/dev/null)
       ip_gateway: $GW
 END
 			>/tmp/log.txt
@@ -96,10 +96,10 @@ END
 			$DIALOG \
 					--title "" \
 					--clear "$@" \
-					--msgbox "Работы завершены.\nПожалуйста, перезагрузите компьютер" 10 41
+					--msgbox "Работы завершены.\nПароль локального администратора localadmin изменен на пароль учетной записи администратора домена\nКомпьютер будет перезагружен" 10 41
 			case $? in
 			$DIALOG_OK)
-				break
+				python3 -c 'import ansible_runner; a = ansible_runner.run(private_data_dir="/home/localadmin/ALDPro-deploy", module="shell", module_args="reboot", host_pattern="localhost", quiet=True,)'
 				;;
 			esac
 		fi
