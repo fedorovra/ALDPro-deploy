@@ -15,23 +15,37 @@ while test $returncode != 1 && test $returncode != 250
 do
 	returncode=$?
 	exec 3>&1
-	value=`$DIALOG  --title "Конфигуратор ALDPro" --ok-label "Submit" \
+	value=`$DIALOG --title "Конфигуратор ALD Pro" \
+		--help-button \
 		--insecure "$@" \
-		--mixedform "Введите настройки первичного контроллера домена:" \
-		20 52 0 \
-		"Пароль администратора домена: " 1 1 "$PASSWORD1" 1 30 20 0 1 \
-		"Повторите ввод пароля       : " 2 1 "$PASSWORD2" 2 30 20 0 1 \
-		"Имя компьютера              : " 3 1 "$HOSTNAME" 3 30 20 0 0 \
-		"Домен                       : " 4 1 "$DOMAIN" 4 30 20 0 0 \
-		"IP-адрес контроллера        : " 5 1 "$IP" 5 30 20 0 0 \
-		"Маска сети                  : " 6 1 "$MASK" 6 30 20 0 0 \
-		"Шлюз                        : " 7 1 "$GW" 7 30 20 0 0 \
+		--mixedform "\nВведите настройки первичного контроллера.\nВсе поля обязательны для заполнения\n" \
+		20 55 0 \
+		"Домен                        : " 1 1 "$DOMAIN"    1 32 20 0 0 \
+		"Имя компьютера               : " 2 1 "$HOSTNAME"  2 32 20 0 0 \
+		"IP-адрес                     : " 3 1 "$IP"        3 32 20 0 0 \
+		"Маска сети                   : " 4 1 "$MASK"      4 32 20 0 0 \
+		"Шлюз                         : " 5 1 "$GW"        5 32 20 0 0 \
+		"Задайте пароль администратора: " 6 1 "$PASSWORD1" 6 32 25 0 1 \
+		"Повторите ввод пароля        : " 7 1 "$PASSWORD2" 7 32 20 0 1 \
 		2>&1 1>&3`
 	returncode=$?
 	exec 3>&-
 
 	case $returncode in
 	$DIALOG_CANCEL)
+		"$DIALOG" \
+				--clear \
+				--yesno "Вы хотите выйти?" 10 30
+		case $? in
+		$DIALOG_OK)
+			break
+			;;
+		$DIALOG_CANCEL)
+			returncode=99
+			;;
+		esac
+		;;
+	$DIALOG_ESC)
 		"$DIALOG" \
 				--clear \
 				--yesno "Вы хотите выйти?" 10 30
@@ -83,6 +97,18 @@ do
 					--no-collapse \
 					--cr-wrap \
 					--msgbox "Ошибка во вводимых данных!\nIP-адрес контроллера и шлюз в разных сетях" 10 40
+		elif [[ ! $HOSTNAME =~ ^[0-9a-zA-Z][0-9a-zA-Z_-]*[0-9a-zA-Z]$ ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Имя компьютера содержит недопустимые символы!" 10 40
+		elif [[ ! $DOMAIN =~ ^[0-9a-zA-Z][0-9a-zA-Z._-]*[0-9a-zA-Z]$ ]]; then
+			$DIALOG \
+					--clear \
+					--no-collapse \
+					--cr-wrap \
+					--msgbox "Домен содержит недопустимые символы!" 10 40
 		else
 			cat > /home/localadmin/ALDPro-deploy/inventory/hosts << END
 all:
@@ -125,12 +151,11 @@ END
 		fi
 		;;
 	$DIALOG_HELP)
-		echo "Button 2 (Help) pressed."
-		exit
-		;;
-	$DIALOG_EXTRA)
-		echo "Button 3 (Extra) pressed."
-		exit
+		$DIALOG \
+				--clear \
+				--no-collapse \
+				--cr-wrap \
+				--msgbox "Справка тут" 20 55
 		;;
 	*)
 		echo "Return code was $returncode"
