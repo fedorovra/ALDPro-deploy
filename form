@@ -59,13 +59,13 @@ do
 		esac
 		;;
 	$DIALOG_OK)
-		PASSWORD1=$(echo $value | paste -s -d' ' | awk '{ print $1 }')
-		PASSWORD2=$(echo $value | paste -s -d' ' | awk '{ print $2 }')
-		HOSTNAME=$(echo $value | paste -s -d' ' | awk '{ print $3 }')
-		DOMAIN=$(echo $value | paste -s -d' ' | awk '{ print $4 }')
-		IP=$(echo $value | paste -s -d' ' | awk '{ print $5 }')
-		MASK=$(echo $value | paste -s -d' ' | awk '{ print $6 }')
-		GW=$(echo $value | paste -s -d' ' | awk '{ print $7 }')
+		PASSWORD1=$(echo $value | paste -s -d' ' | awk '{ print $6 }')
+		PASSWORD2=$(echo $value | paste -s -d' ' | awk '{ print $7 }')
+		HOSTNAME=$(echo $value | paste -s -d' ' | awk '{ print $2 }')
+		DOMAIN=$(echo $value | paste -s -d' ' | awk '{ print $1 }')
+		IP=$(echo $value | paste -s -d' ' | awk '{ print $3 }')
+		MASK=$(echo $value | paste -s -d' ' | awk '{ print $4 }')
+		GW=$(echo $value | paste -s -d' ' | awk '{ print $5 }')
 		
 		if [[ ! $PASSWORD1 || ! $PASSWORD2 || ! $HOSTNAME || ! $DOMAIN || ! $IP || ! $MASK || ! $GW ]]; then
 			$DIALOG \
