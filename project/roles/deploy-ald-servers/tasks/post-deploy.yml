@@ -25,7 +25,3 @@
     name: localadmin
     state: present
     password: "{{ admin_password | password_hash('sha512') }}"
-
-- name:
-  shell: |
-    echo -e "XXX\n100\n[Выполнено] : Подготовка\n[Выполнено] : Обновление_ОС\n[Выполнено] : Установка_пакетов\n[Выполнено] : Настройка_контроллера\nXXX" >> /tmp/log.txt

@@ -6,7 +6,3 @@
 
 - name: Flush handlers
   meta: flush_handlers
-
-- name:
-  shell: |
-    echo -e "XXX\n20\n[Выполняется] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt

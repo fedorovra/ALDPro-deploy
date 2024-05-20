@@ -2,7 +2,3 @@
   template:
     src: resolv.conf.2.j2
     dest: "/etc/resolv.conf"
-
-- name:
-  shell: |
-    echo -e "XXX\n80\n[Выполнено] : Подготовка\n[Выполнено] : Обновление_ОС\n[Выполнено] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt

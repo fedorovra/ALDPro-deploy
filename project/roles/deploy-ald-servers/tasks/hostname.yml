@@ -1,6 +1,2 @@
 - name: Set hostname
   shell: hostnamectl set-hostname "{{ FQDN }}"
-
-- name:
-  shell: |
-    echo -e "XXX\n40\n[Выполняется] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt

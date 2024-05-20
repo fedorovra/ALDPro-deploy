@@ -6,7 +6,3 @@
 
 - name: Mask NetworkManager
   shell: systemctl mask NetworkManager.service
-
-- name:
-  shell: |
-    echo -e "XXX\n80\n[Выполняется] : Подготовка\n[Ожидает] : Обновление_ОС\n[Ожидает] : Установка_пакетов\n[Ожидает] : Настройка_контроллера\nXXX" >> /tmp/log.txt

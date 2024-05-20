@@ -1,10 +1,2 @@
-- name:
-  shell: |
-    echo -e "XXX\n80\n[Выполнено] : Подготовка\n[Выполнено] : Обновление_ОС\n[Выполнено] : Установка_пакетов\n[Выполняется] : Настройка_контроллера\nXXX" >> /tmp/log.txt
-
 - name: Deploy first controller
   shell: aldpro-server-install -d "{{ FQDN.split(".")[1:]|join(".") }}" -n "{{ FQDN.split(".")[0] }}" -p "{{ admin_password }}" --ip "{{ ip_address }}" --no-reboot
-
-- name:
-  shell: |
-    echo -e "XXX\n90\n[Выполнено] : Подготовка\n[Выполнено] : Обновление_ОС\n[Выполнено] : Установка_пакетов\n[Выполняется] : Настройка_контроллера\nXXX" >> /tmp/log.txt
