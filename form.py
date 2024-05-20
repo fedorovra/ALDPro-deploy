@@ -144,7 +144,7 @@ while True:
                         runner_config = ansible_runner.RunnerConfig(
                                                         private_data_dir="/home/localadmin/ALDPro-deploy", 
                                                         playbook="playbook.yaml", 
-                                                        tags="deploy-ald-servers:{}".format(tag["name"]),
+                                                        tags="role::deploy-ald-servers:{}".format(tag["name"]),
                                                         quiet=True,
                                                         suppress_ansible_output=True,
                         )
