@@ -162,16 +162,16 @@ while True:
                 d.gauge_update(100, text=Template(template).render(tags=tags), update_text=True)
                 d.gauge_stop()
 
-                d.msgbox("Работы завершены!", height=None, width=None)
-                # ansible_runner.run(
-                #                    private_data_dir="/home/localadmin/ALDPro-deploy", 
-                #                    module="shell", 
-                #                    module_args="reboot", 
-                #                    host_pattern="localhost", 
-                #                    quiet=True,
-                # )
-                os.system('clear')
-                sys.exit()
+                d.msgbox("Работы завершены!\nКомпьютер будет перезагружен!", height=None, width=None)
+                ansible_runner.run(
+                                   private_data_dir="/home/localadmin/ALDPro-deploy", 
+                                   module="shell", 
+                                   module_args="reboot", 
+                                   host_pattern="localhost", 
+                                   quiet=True,
+                )
+                # os.system('clear')
+                # sys.exit()
 
 
             if code == d.CANCEL or code == d.ESC:
